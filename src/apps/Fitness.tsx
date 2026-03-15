@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const gymExercises = {
@@ -88,9 +88,16 @@ export default function App() {
   const [tab, setTab] = useState("schedule");
   const [activeWeek, setActiveWeek] = useState(0);
   const [expanded, setExpanded] = useState(null);
-  const [done, setDone] = useState({});
+  const [done, setDone] = useState<Record<string, boolean>>(() => {
+    try { return JSON.parse(localStorage.getItem("fitness-done") || "{}"); }
+    catch { return {}; }
+  });
 
-  const toggle = (id, e) => {
+  useEffect(() => {
+    localStorage.setItem("fitness-done", JSON.stringify(done));
+  }, [done]);
+
+  const toggle = (id: string, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
     setDone(p => ({ ...p, [id]: !p[id] }));
   };
