@@ -102,13 +102,14 @@ export default function App() {
   const week = weeks[activeWeek];
 
   const S = {
-    root: { minHeight: "100vh", background: "#07070f", color: "#e2e8f0", fontFamily: "monospace", maxWidth: 500, margin: "0 auto" },
+    root: { minHeight: "100vh", background: "#07070f", color: "#e2e8f0", fontFamily: "monospace" },
     header: { background: "rgba(7,7,15,0.97)", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "16px 20px 13px" },
     tabs: { display: "flex", borderBottom: "1px solid rgba(255,255,255,0.05)", background: "#07070f" },
   };
 
   return (
     <div style={S.root}>
+      <div style={{ maxWidth: 600, margin: "0 auto" }}>
       {/* HEADER */}
       <div style={S.header}>
         <Link to="/" style={{ display: "inline-flex", alignItems: "center", gap: 5, fontSize: 9, color: "#334155", textDecoration: "none", letterSpacing: "0.1em", marginBottom: 12 }}>
@@ -363,5 +364,6 @@ export default function App() {
         </div>
       )}
     </div>
+      </div>
   );
 }

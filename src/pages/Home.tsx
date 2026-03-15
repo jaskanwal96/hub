@@ -16,14 +16,14 @@ const apps = [
 
 export default function Home() {
   return (
-    <div style={{ minHeight: "100vh", background: "#07070f", color: "#e2e8f0", fontFamily: "monospace", maxWidth: 500, margin: "0 auto", padding: "40px 20px" }}>
+    <div style={{ minHeight: "100vh", background: "#07070f", color: "#e2e8f0", fontFamily: "monospace", padding: "40px 24px", maxWidth: 1100, margin: "0 auto" }}>
       <div style={{ marginBottom: 40 }}>
         <div style={{ fontSize: 9, letterSpacing: "0.2em", color: "#334155", marginBottom: 8 }}>PERSONAL HUB</div>
         <div style={{ fontSize: 26, fontWeight: 700, color: "#f1f5f9", letterSpacing: "-0.02em", lineHeight: 1.1 }}>My Apps</div>
         <div style={{ fontSize: 11, color: "#334155", marginTop: 6 }}>Small tools built for me.</div>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+      <div className="home-grid">
         {apps.map((app) => (
           <Link
             key={app.slug}
