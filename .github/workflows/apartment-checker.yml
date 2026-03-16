@@ -12,7 +12,7 @@ on:
     branches:
       - main
     paths:
-      - "scripts/apartment-checker/**"   # only triggers if this script changes
+      - "scripts/apartment-searcher.py"
 
   workflow_dispatch: # manual trigger from GitHub Actions UI
 
