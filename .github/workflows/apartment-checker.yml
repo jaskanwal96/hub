@@ -37,4 +37,4 @@ jobs:
       - name: Run availability check
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
-        run: python scripts/apartment-checker/ur_checker.py
+        run: python scripts/apartment-searcher.py
