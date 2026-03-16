@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-UR Kawasaki Apartment Availability Checker
+UR East Kanagawa Apartment Availability Checker
 Triggered by GitHub Actions cron. Runs once and exits.
 Sends a push notification via ntfy.sh when rooms are available.
 """
@@ -13,11 +13,11 @@ from datetime import datetime
 # ─── CONFIG ───────────────────────────────────────────────────────────────────
 
 # Set as a GitHub Actions Secret named NTFY_TOPIC
-NTFY_TOPIC = "ur-kawasaki-supernova-42"
+NTFY_TOPIC = "ur-east-kanagawa-supernova-42"
 
 ROOM_TYPES = ["1LDK", "2K", "2DK"]
 
-# Bounding box for Kawasaki
+# Bounding box for East Kanagawa
 NE_LAT = 35.58560762751869
 NE_LNG = 139.7360707173103
 SW_LAT = 35.502360969814525
@@ -72,7 +72,7 @@ def send_notification(available):
     total_rooms = sum(item["roomCount"] for item in available)
     lines = [f"• ID {item['id']}: {item['roomCount']} room(s)" for item in available]
     message = f"{total_rooms} room(s) across {len(available)} building(s)!\n" + "\n".join(lines)
-    title = f"UR Kawasaki - {len(available)} building(s) available!"
+    title = f"UR East Kanagawa - {len(available)} building(s) available!"
 
     print(f"[{now()}] Sending notification to ntfy.sh/{NTFY_TOPIC}")
     print(f"[{now()}] Title: {title}")
@@ -97,7 +97,7 @@ def main():
     if not NTFY_TOPIC:
         print("ERROR: NTFY_TOPIC is not set")
         sys.exit(1)
-    print(f"[{now()}] Checking UR API for Kawasaki availability...")
+    print(f"[{now()}] Checking UR API for East Kanagawa availability...")
     data = fetch_listings()
     print(f"[{now()}] Raw data type: {type(data).__name__}, keys: {list(data.keys()) if isinstance(data, dict) else 'N/A (list)'}")
     listings = data if isinstance(data, list) else data.get("list", [])
