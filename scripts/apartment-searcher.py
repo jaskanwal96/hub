@@ -54,8 +54,13 @@ def build_payload():
 
 
 def fetch_listings():
+    payload = build_payload()
+    print(f"[{now()}] POST {API_URL}")
+    print(f"[{now()}] Payload: {payload}")
     try:
-        response = requests.post(API_URL, headers=HEADERS, data=build_payload(), timeout=15)
+        response = requests.post(API_URL, headers=HEADERS, data=payload, timeout=15)
+        print(f"[{now()}] Response status: {response.status_code}")
+        print(f"[{now()}] Response body (first 500 chars): {response.text[:500]}")
         response.raise_for_status()
         return response.json()
     except Exception as e:
@@ -69,6 +74,9 @@ def send_notification(available):
     message = f"{total_rooms} room(s) across {len(available)} building(s)!\n" + "\n".join(lines)
     title = f"UR Kawasaki — {len(available)} building(s) available!"
 
+    print(f"[{now()}] Sending notification to ntfy.sh/{NTFY_TOPIC}")
+    print(f"[{now()}] Title: {title}")
+    print(f"[{now()}] Message: {message}")
     try:
         r = requests.post(
             f"https://ntfy.sh/{NTFY_TOPIC}",
@@ -76,6 +84,7 @@ def send_notification(available):
             headers={"Title": title, "Priority": "high", "Tags": "house,bell"},
             timeout=10,
         )
+        print(f"[{now()}] ntfy response status: {r.status_code} — {r.text}")
         r.raise_for_status()
         print(f"[{now()}] Notification sent: {title}")
     except Exception as e:
@@ -84,22 +93,25 @@ def send_notification(available):
 
 
 def main():
+    print(f"[{now()}] NTFY_TOPIC: {NTFY_TOPIC}")
     if not NTFY_TOPIC:
-        print("ERROR: NTFY_TOPIC env var is not set")
+        print("ERROR: NTFY_TOPIC is not set")
         sys.exit(1)
     print(f"[{now()}] Checking UR API for Kawasaki availability...")
     data = fetch_listings()
+    print(f"[{now()}] Raw data type: {type(data).__name__}, keys: {list(data.keys()) if isinstance(data, dict) else 'N/A (list)'}")
     listings = data if isinstance(data, list) else data.get("list", [])
+    print(f"[{now()}] Total listings returned: {len(listings)}")
     available = [item for item in listings if item.get("roomCount", 0) > 0]
+    print(f"[{now()}] Listings with roomCount > 0: {len(available)}")
 
     if available:
         print(f"[{now()}] FOUND {len(available)} building(s) with rooms!")
         for item in available:
             print(f"  -> ID: {item['id']} | Rooms: {item['roomCount']}")
-        send_notification(available)
     else:
         print(f"[{now()}] No rooms available (checked {len(listings)} buildings.)")
-
+    send_notification(available)
 
 if __name__ == "__main__":
     main()
