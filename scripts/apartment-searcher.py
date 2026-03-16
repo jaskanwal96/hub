@@ -13,7 +13,7 @@ from datetime import datetime
 # ─── CONFIG ───────────────────────────────────────────────────────────────────
 
 # Set as a GitHub Actions Secret named NTFY_TOPIC
-NTFY_TOPIC = os.environ.get("NTFY_TOPIC", "ur-kawasaki-supernova-42")
+NTFY_TOPIC = "ur-kawasaki-supernova-42"
 
 ROOM_TYPES = ["1LDK", "2K", "2DK"]
 
@@ -84,6 +84,9 @@ def send_notification(available):
 
 
 def main():
+    if not NTFY_TOPIC:
+        print("ERROR: NTFY_TOPIC env var is not set")
+        sys.exit(1)
     print(f"[{now()}] Checking UR API for Kawasaki availability...")
     data = fetch_listings()
     listings = data if isinstance(data, list) else data.get("list", [])
