@@ -1,0 +1,38 @@
+name: Apartment Checker
+
+on:
+  schedule:
+    # All times UTC (JST = UTC+9)
+    - cron: "0 23 * * *"  # 08:00 JST
+    - cron: "0 3 * * *"   # 12:00 JST
+    - cron: "0 9 * * *"   # 18:00 JST
+    - cron: "0 13 * * *"  # 22:00 JST
+
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/apartment-checker/**"   # only triggers if this script changes
+
+  workflow_dispatch: # manual trigger from GitHub Actions UI
+
+jobs:
+  check-availability:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run availability check
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python scripts/apartment-checker/ur_checker.py
