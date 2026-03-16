@@ -72,7 +72,7 @@ def send_notification(available):
     total_rooms = sum(item["roomCount"] for item in available)
     lines = [f"• ID {item['id']}: {item['roomCount']} room(s)" for item in available]
     message = f"{total_rooms} room(s) across {len(available)} building(s)!\n" + "\n".join(lines)
-    title = f"UR Kawasaki — {len(available)} building(s) available!"
+    title = f"UR Kawasaki - {len(available)} building(s) available!"
 
     print(f"[{now()}] Sending notification to ntfy.sh/{NTFY_TOPIC}")
     print(f"[{now()}] Title: {title}")
