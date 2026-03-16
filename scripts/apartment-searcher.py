@@ -95,7 +95,7 @@ def main():
             print(f"  -> ID: {item['id']} | Rooms: {item['roomCount']}")
         send_notification(available)
     else:
-        print(f"[{now()}] No rooms available (checked {len(listings)} buildings)")
+        print(f"[{now()}] No rooms available (checked {len(listings)} buildings.)")
 
 
 if __name__ == "__main__":
