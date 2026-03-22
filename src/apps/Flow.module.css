@@ -1,0 +1,23 @@
+.container {
+  min-height: 100vh;
+  background: var(--hub-color-bg-base);
+  color: var(--hub-color-text-primary);
+  overflow: hidden;
+  position: relative;
+}
+
+.canvas {
+  position: absolute;
+  cursor: grab;
+  width: var(--canvas-width, 2000px);
+  height: var(--canvas-height, 2000px);
+  background-image: radial-gradient(circle, var(--hub-color-base-slate-700) 0.5px, transparent 1px);
+  background-size: 24px 24px;
+  transform: translate(var(--pan-x, 0px), var(--pan-y, 0px));
+  will-change: transform;
+  user-select: none;
+}
+
+.canvas:active {
+  cursor: grabbing;
+}
