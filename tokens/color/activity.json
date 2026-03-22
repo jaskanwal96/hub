@@ -1,0 +1,8 @@
+{
+  "activity": {
+    "gym":  { "color": { "$value": "{color.base.orange-400}", "$type": "color" } },
+    "run":  { "color": { "$value": "{color.base.cyan-400}",   "$type": "color" } },
+    "rest": { "color": { "$value": "{color.base.slate-600}",  "$type": "color" } },
+    "race": { "color": { "$value": "{color.base.amber-400}",  "$type": "color" } }
+  }
+}

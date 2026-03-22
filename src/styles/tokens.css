@@ -1,0 +1,47 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --hub-activity-gym-color: #fb923c;
+  --hub-activity-run-color: #22d3ee;
+  --hub-activity-rest-color: #475569;
+  --hub-activity-race-color: #fbbf24;
+  --hub-color-base-black: #07070f;
+  --hub-color-base-cyan-400: #22d3ee;
+  --hub-color-base-cyan-700: #0e7490;
+  --hub-color-base-orange-400: #fb923c;
+  --hub-color-base-amber-400: #fbbf24;
+  --hub-color-base-blue-400: #60a5fa;
+  --hub-color-base-blue-500: #3b82f6;
+  --hub-color-base-green-400: #4ade80;
+  --hub-color-base-red-400: #f87171;
+  --hub-color-base-slate-100: #f1f5f9;
+  --hub-color-base-slate-200: #e2e8f0;
+  --hub-color-base-slate-300: #cbd5e1;
+  --hub-color-base-slate-400: #94a3b8;
+  --hub-color-base-slate-500: #7f96b0;
+  --hub-color-base-slate-600: #475569;
+  --hub-color-base-slate-700: #334155;
+  --hub-color-base-blue-gray-1: #3d5066;
+  --hub-color-base-blue-gray-2: #2d3f52;
+  --hub-color-base-blue-gray-3: #1e2d3d;
+  --hub-color-bg-base: #07070f;
+  --hub-color-bg-surface: rgba(255, 255, 255, 0.02);
+  --hub-color-bg-overlay: rgba(0, 0, 0, 0.4);
+  --hub-color-text-primary: #e2e8f0;
+  --hub-color-text-secondary: #3d5066;
+  --hub-color-text-muted: #2d3f52;
+  --hub-color-text-faint: #1e2d3d;
+  --hub-color-text-title: #f1f5f9;
+  --hub-color-text-light: #cbd5e1;
+  --hub-color-text-detail: #7f96b0;
+  --hub-color-accent-primary: #22d3ee;
+  --hub-color-accent-secondary: #0e7490;
+  --hub-color-success: #4ade80;
+  --hub-color-border-default: rgba(255, 255, 255, 0.06);
+  --hub-color-border-subtle: rgba(255, 255, 255, 0.05);
+  --hub-zone-z2: #60a5fa;
+  --hub-zone-z4: #fb923c;
+  --hub-zone-z5: #f87171;
+}

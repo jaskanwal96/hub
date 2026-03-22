@@ -11,6 +11,16 @@ const apps = [
     bg: "rgba(34,211,238,0.06)",
     status: "active",
   },
+  {
+    slug: "flow",
+    icon: "🏃",
+    name: "Flow",
+    desc: "Inspired by react flow",
+    color: "#22d3ee",
+    border: "rgba(34,211,238,0.22)",
+    bg: "rgba(34,211,238,0.06)",
+    status: "active",
+  },
   // Add more apps here
 ];
 
@@ -33,7 +43,7 @@ export default function Home() {
             <div style={{
               display: "flex", alignItems: "center", gap: 14, padding: "16px 18px",
               background: app.bg, border: `1px solid ${app.border}`, borderRadius: 12,
-              transition: "opacity 0.15s", cursor: "pointer",
+              transition: "opacity 0.15s", cursor: "pointer", minHeight: 100,
             }}>
               <div style={{ fontSize: 28, flexShrink: 0 }}>{app.icon}</div>
               <div style={{ flex: 1 }}>

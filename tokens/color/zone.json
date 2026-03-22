@@ -1,0 +1,7 @@
+{
+  "zone": {
+    "z2": { "$value": "{color.base.blue-400}",   "$type": "color" },
+    "z4": { "$value": "{color.base.orange-400}", "$type": "color" },
+    "z5": { "$value": "{color.base.red-400}",    "$type": "color" }
+  }
+}

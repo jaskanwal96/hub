@@ -87,7 +87,7 @@ const ZC = { Z2: "#60a5fa", Z4: "#fb923c", Z5: "#f87171" };
 export default function App() {
   const [tab, setTab] = useState("schedule");
   const [activeWeek, setActiveWeek] = useState(0);
-  const [expanded, setExpanded] = useState(null);
+  const [expanded, setExpanded] = useState<number | null>(null);
   const [done, setDone] = useState<Record<string, boolean>>(() => {
     try { return JSON.parse(localStorage.getItem("fitness-done") || "{}"); }
     catch { return {}; }
@@ -166,7 +166,7 @@ export default function App() {
 
           <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
             {week.days.map((d, i) => {
-              const cfg = TYPE[d.type];
+              const cfg = TYPE[d.type as keyof typeof TYPE];
               const isExp = expanded === i;
               const id = `${activeWeek}-${i}`;
               const isDone = !!done[id];
@@ -214,7 +214,7 @@ export default function App() {
                       )}
                     </div>
                     <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
-                      {d.zone && <div style={{ fontSize: 8, fontWeight: 700, color: ZC[d.zone], border: `1px solid ${ZC[d.zone]}40`, borderRadius: 3, padding: "1px 5px" }}>{d.zone}</div>}
+                      {d.zone && <div style={{ fontSize: 8, fontWeight: 700, color: ZC[d.zone as keyof typeof ZC], border: `1px solid ${ZC[d.zone as keyof typeof ZC]}40`, borderRadius: 3, padding: "1px 5px" }}>{d.zone}</div>}
                       {isDone && !isExp && <span style={{ fontSize: 10, color: "#4ade80" }}>✓</span>}
                       <span style={{ color: "#1e2d3d", fontSize: 9, display: "inline-block", transform: isExp?"rotate(180deg)":"none", transition: "transform 0.2s" }}>▼</span>
                     </div>
@@ -252,7 +252,7 @@ export default function App() {
                   if (d.type === "rest") return null;
                   const id = `${wi}-${di}`;
                   const isDone = !!done[id];
-                  const cfg = TYPE[d.type];
+                  const cfg = TYPE[d.type as keyof typeof TYPE];
                   return (
                     <div key={di} onClick={() => toggle(id)} style={{
                       display: "flex", alignItems: "center", gap: 10, padding: "11px 13px", borderRadius: 8, cursor: "pointer",
@@ -266,7 +266,7 @@ export default function App() {
                         <div style={{ fontSize: 12, fontWeight: 600, color: isDone?"#4ade80":"#cbd5e1", textDecoration: isDone?"line-through":"none", opacity: isDone?0.55:1 }}>{d.day} — {d.label}</div>
                         <div style={{ fontSize: 9, color: "#1e2d3d", marginTop: 1 }}>{w.label}</div>
                       </div>
-                      {d.zone && <div style={{ fontSize: 8, fontWeight: 700, color: ZC[d.zone], border: `1px solid ${ZC[d.zone]}35`, borderRadius: 3, padding: "1px 5px" }}>{d.zone}</div>}
+                      {d.zone && <div style={{ fontSize: 8, fontWeight: 700, color: ZC[d.zone as keyof typeof ZC], border: `1px solid ${ZC[d.zone as keyof typeof ZC]}35`, borderRadius: 3, padding: "1px 5px" }}>{d.zone}</div>}
                     </div>
                   );
                 })}
