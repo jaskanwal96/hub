@@ -21,7 +21,7 @@ const apps = [
     bg: "rgba(34,211,238,0.06)",
     status: "active",
   },
-    {
+  {
     slug: "bjp",
     icon: "🏃",
     name: "BJP",
@@ -29,6 +29,16 @@ const apps = [
     color: "#22d3ee",
     border: "rgba(34,211,238,0.22)",
     bg: "rgba(34,211,238,0.06)",
+    status: "active",
+  },
+  {
+    slug: "krabi",
+    icon: "🏃",
+    name: "Krabi",
+    desc: "Inspired by react flow",
+    color: "#22d3ee",
+    border: "rgba(34,211,238,0.22)",
+    bg: "rgba(34, 184, 238, 0.06)",
     status: "active",
   },
   // Add more apps here
