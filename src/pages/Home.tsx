@@ -13,7 +13,7 @@ const apps = [
   },
   {
     slug: "flow",
-    icon: "🏃",
+    icon: "🔀",
     name: "Flow",
     desc: "Inspired by react flow",
     color: "#22d3ee",
@@ -23,7 +23,7 @@ const apps = [
   },
   {
     slug: "bjp",
-    icon: "🏃",
+    icon: "🏛️",
     name: "BJP",
     desc: "Inspired by react flow",
     color: "#22d3ee",
@@ -33,7 +33,7 @@ const apps = [
   },
   {
     slug: "krabi",
-    icon: "🏃",
+    icon: "🌴",
     name: "Krabi",
     desc: "Inspired by react flow",
     color: "#22d3ee",
