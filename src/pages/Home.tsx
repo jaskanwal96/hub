@@ -41,6 +41,16 @@ const apps = [
     bg: "rgba(34, 184, 238, 0.06)",
     status: "active",
   },
+  {
+    slug: "reset",
+    icon: "⚡",
+    name: "Chandigarh Reset",
+    desc: "15-day sprint · Apr 28 – May 12. Fitness, roadmap, deep work.",
+    color: "#f97316",
+    border: "rgba(249,115,22,0.22)",
+    bg: "rgba(249,115,22,0.05)",
+    status: "active",
+  },
   // Add more apps here
 ];
 

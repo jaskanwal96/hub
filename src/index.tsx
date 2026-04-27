@@ -7,6 +7,7 @@ import Fitness from "./apps/Fitness";
 import Flow from "./apps/Flow";
 import BJP from "./apps/BJP";
 import Krabi from "./apps/Krabi";
+import Reset from "./apps/reset";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -17,6 +18,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/flow" element={<Flow />} />
         <Route path="/bjp" element={<BJP />} />
         <Route path="/krabi" element={<Krabi />} />
+        <Route path="/reset" element={<Reset />} />
       </Routes>
     </HashRouter>
   </StrictMode>
