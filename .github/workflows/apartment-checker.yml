@@ -3,7 +3,6 @@ name: Apartment Checker
 on:
   schedule:
     # All times UTC (JST = UTC+9)
-    - cron: "0 23 * * *"  # 08:00 JST
     - cron: "0 3 * * *"   # 12:00 JST
     - cron: "0 9 * * *"   # 18:00 JST
     - cron: "0 13 * * *"  # 22:00 JST
