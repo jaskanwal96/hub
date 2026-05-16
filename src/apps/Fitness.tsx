@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react';
 
 // ----- TYPES -----
+interface Exercise {
+  name: string;
+  sets: string;
+  note?: string;
+}
+
 interface Session {
   day: string;
   label: string;
   type: 'strength' | 'run' | 'rest';
   detail: string;
+  exercises?: Exercise[];
 }
 
 interface Phase {
@@ -40,11 +47,29 @@ const PHASES: Phase[] = [
     color: '#22d3ee',
     intent: 'Wake up the nervous system. Light weights, easy runs. Survive, do not perform.',
     weeklyTemplate: [
-      { day: 'Mon', label: 'Push', type: 'strength', detail: 'Bench, OHP, incline DB, lateral raises, tricep ext. 70% of April loads. 3×8–10.' },
+      { day: 'Mon', label: 'Push', type: 'strength', detail: 'Bench, OHP, incline DB, lateral raises, tricep ext. 70% of April loads. 3×8–10.', exercises: [
+        { name: 'Bench Press', sets: '3×8–10', note: '70% of April weight' },
+        { name: 'OHP', sets: '3×8–10', note: '70% of April weight' },
+        { name: 'Incline DB Press', sets: '3×10' },
+        { name: 'Lateral Raises', sets: '3×12' },
+        { name: 'Tricep Extension', sets: '3×10' },
+      ]},
       { day: 'Tue', label: 'Z2 Run · 4 km', type: 'run', detail: 'Easy aerobic. HR 132–147. Pace 6:30–7:00/km. Nose breathing only.' },
-      { day: 'Wed', label: 'Pull', type: 'strength', detail: 'Deadlift (light), pull-ups, rows, face pulls, biceps. 3×8–10.' },
+      { day: 'Wed', label: 'Pull', type: 'strength', detail: 'Deadlift (light), pull-ups, rows, face pulls, biceps. 3×8–10.', exercises: [
+        { name: 'Deadlift', sets: '3×8', note: 'Light — 60% of max' },
+        { name: 'Pull-ups', sets: '3×8–10', note: 'Bodyweight' },
+        { name: 'Barbell Row', sets: '3×10' },
+        { name: 'Face Pulls', sets: '3×15' },
+        { name: 'Bicep Curls', sets: '3×10' },
+      ]},
       { day: 'Thu', label: 'Walk / Rest', type: 'rest', detail: '30–45 min walk outside. Sunlight. Reset.' },
-      { day: 'Fri', label: 'Legs', type: 'strength', detail: 'Squat (light), RDL, lunges, leg curl, calf. 3×8–10. Stop with 2 reps in tank.' },
+      { day: 'Fri', label: 'Legs', type: 'strength', detail: 'Squat (light), RDL, lunges, leg curl, calf. 3×8–10. Stop with 2 reps in tank.', exercises: [
+        { name: 'Squat', sets: '3×8–10', note: '70% of max, 2 reps in tank' },
+        { name: 'RDL', sets: '3×10' },
+        { name: 'Lunges', sets: '3×10 each leg' },
+        { name: 'Leg Curl', sets: '3×12' },
+        { name: 'Calf Raises', sets: '3×15' },
+      ]},
       { day: 'Sat', label: 'Z2 Run · 5 km', type: 'run', detail: 'Same zone as Tuesday. Slightly longer. Hold pace.' },
       { day: 'Sun', label: 'Rest', type: 'rest', detail: 'Full off. Stretch, mobility, hydrate.' },
     ],
@@ -57,11 +82,29 @@ const PHASES: Phase[] = [
     color: '#a78bfa',
     intent: 'Return to full strength loads. Add one tempo run. Volume creeps up.',
     weeklyTemplate: [
-      { day: 'Mon', label: 'Push', type: 'strength', detail: 'Back to full April weights. 4×6–8 compound, 3×10–12 isolation.' },
+      { day: 'Mon', label: 'Push', type: 'strength', detail: 'Back to full April weights. 4×6–8 compound, 3×10–12 isolation.', exercises: [
+        { name: 'Bench Press', sets: '4×6–8', note: 'Back to April weight' },
+        { name: 'OHP', sets: '4×6–8' },
+        { name: 'Incline DB Press', sets: '3×10–12' },
+        { name: 'Lateral Raises', sets: '3×12' },
+        { name: 'Tricep Extension', sets: '3×10–12' },
+      ]},
       { day: 'Tue', label: 'Z2 Run · 5–6 km', type: 'run', detail: 'Easy. HR 132–147. Build aerobic base.' },
-      { day: 'Wed', label: 'Pull', type: 'strength', detail: 'Deadlift heavier, weighted pull-ups if possible, rows, biceps.' },
+      { day: 'Wed', label: 'Pull', type: 'strength', detail: 'Deadlift heavier, weighted pull-ups if possible, rows, biceps.', exercises: [
+        { name: 'Deadlift', sets: '4×6', note: 'Heavier than Phase 1' },
+        { name: 'Weighted Pull-ups', sets: '3×6–8', note: 'Add weight if possible' },
+        { name: 'Barbell Row', sets: '4×8' },
+        { name: 'Face Pulls', sets: '3×15' },
+        { name: 'Bicep Curls', sets: '3×10–12' },
+      ]},
       { day: 'Thu', label: 'Tempo · 4 km', type: 'run', detail: '1 km warm-up + 3 km at 5:30–5:50/km + cooldown.' },
-      { day: 'Fri', label: 'Legs', type: 'strength', detail: 'Squat 4×6, RDL 4×8, lunges, calf raises.' },
+      { day: 'Fri', label: 'Legs', type: 'strength', detail: 'Squat 4×6, RDL 4×8, lunges, calf raises.', exercises: [
+        { name: 'Squat', sets: '4×6' },
+        { name: 'RDL', sets: '4×8' },
+        { name: 'Lunges', sets: '3×10 each leg' },
+        { name: 'Leg Curl', sets: '3×12' },
+        { name: 'Calf Raises', sets: '4×12' },
+      ]},
       { day: 'Sat', label: 'Z2 Long · 6 km', type: 'run', detail: 'Slow and steady. HR ceiling 147.' },
       { day: 'Sun', label: 'Rest', type: 'rest', detail: 'Recovery. Optional mobility.' },
     ],
@@ -74,11 +117,31 @@ const PHASES: Phase[] = [
     color: '#4ade80',
     intent: '4-day strength split + 3 runs. This is the engine you maintain for the cut.',
     weeklyTemplate: [
-      { day: 'Mon', label: 'Upper (Push focus)', type: 'strength', detail: 'Bench 4×5, OHP 4×6, incline DB, lateral, tricep, ab work.' },
+      { day: 'Mon', label: 'Upper (Push focus)', type: 'strength', detail: 'Bench 4×5, OHP 4×6, incline DB, lateral, tricep, ab work.', exercises: [
+        { name: 'Bench Press', sets: '4×5' },
+        { name: 'OHP', sets: '4×6' },
+        { name: 'Incline DB Press', sets: '3×10–12' },
+        { name: 'Lateral Raises', sets: '3×15' },
+        { name: 'Tricep Pushdown', sets: '3×12' },
+        { name: 'Ab Work', sets: '3×15' },
+      ]},
       { day: 'Tue', label: 'Z2 Run · 6–7 km', type: 'run', detail: 'Easy aerobic. Critical for fat oxidation.' },
-      { day: 'Wed', label: 'Lower', type: 'strength', detail: 'Squat 4×5, RDL 4×6, leg press, hamstring curl, calf, core.' },
+      { day: 'Wed', label: 'Lower', type: 'strength', detail: 'Squat 4×5, RDL 4×6, leg press, hamstring curl, calf, core.', exercises: [
+        { name: 'Squat', sets: '4×5' },
+        { name: 'RDL', sets: '4×6' },
+        { name: 'Leg Press', sets: '3×10' },
+        { name: 'Hamstring Curl', sets: '3×12' },
+        { name: 'Calf Raises', sets: '4×15' },
+        { name: 'Core', sets: '3×15' },
+      ]},
       { day: 'Thu', label: 'Speed / Tempo · 5 km', type: 'run', detail: 'Intervals: 5×800m at 5:00/km with 90s recovery, OR sustained tempo.' },
-      { day: 'Fri', label: 'Pull', type: 'strength', detail: 'Deadlift 3×5, weighted pull-ups, rows, biceps, rear delts.' },
+      { day: 'Fri', label: 'Pull', type: 'strength', detail: 'Deadlift 3×5, weighted pull-ups, rows, biceps, rear delts.', exercises: [
+        { name: 'Deadlift', sets: '3×5' },
+        { name: 'Weighted Pull-ups', sets: '4×6' },
+        { name: 'Barbell Row', sets: '4×8' },
+        { name: 'Bicep Curls', sets: '3×10–12' },
+        { name: 'Rear Delt Fly', sets: '3×15' },
+      ]},
       { day: 'Sat', label: 'Long Z2 · 8–10 km', type: 'run', detail: 'Build to 10 km by week 8. HR ceiling 147. Fuel before.' },
       { day: 'Sun', label: 'Rest', type: 'rest', detail: 'Full rest. Sunday meal prep for the week.' },
     ],
@@ -91,11 +154,31 @@ const PHASES: Phase[] = [
     color: '#fb923c',
     intent: 'Sustain Phase 3 structure. Real work is now in the kitchen. 0.3–0.4 kg/week fat loss.',
     weeklyTemplate: [
-      { day: 'Mon', label: 'Upper (Push focus)', type: 'strength', detail: 'Same structure as Phase 3. Push to add 2.5 kg every 2 weeks.' },
+      { day: 'Mon', label: 'Upper (Push focus)', type: 'strength', detail: 'Same structure as Phase 3. Push to add 2.5 kg every 2 weeks.', exercises: [
+        { name: 'Bench Press', sets: '4×5', note: '+2.5 kg every 2 weeks' },
+        { name: 'OHP', sets: '4×6' },
+        { name: 'Incline DB Press', sets: '3×10–12' },
+        { name: 'Lateral Raises', sets: '3×15' },
+        { name: 'Tricep Pushdown', sets: '3×12' },
+        { name: 'Ab Work', sets: '3×15' },
+      ]},
       { day: 'Tue', label: 'Z2 Run · 6–8 km', type: 'run', detail: 'Volume holds. Pace will naturally improve as body comp shifts.' },
-      { day: 'Wed', label: 'Lower', type: 'strength', detail: 'Same as Phase 3. Protect legs in deficit — quality over volume.' },
+      { day: 'Wed', label: 'Lower', type: 'strength', detail: 'Same as Phase 3. Protect legs in deficit — quality over volume.', exercises: [
+        { name: 'Squat', sets: '4×5', note: 'Quality over volume in deficit' },
+        { name: 'RDL', sets: '4×6' },
+        { name: 'Leg Press', sets: '3×10' },
+        { name: 'Hamstring Curl', sets: '3×12' },
+        { name: 'Calf Raises', sets: '4×15' },
+        { name: 'Core', sets: '3×15' },
+      ]},
       { day: 'Thu', label: 'Speed / Tempo · 5–6 km', type: 'run', detail: 'Alternate weeks: intervals one week, tempo the next.' },
-      { day: 'Fri', label: 'Pull', type: 'strength', detail: 'Same as Phase 3. Pull-up progression is the long-term flex.' },
+      { day: 'Fri', label: 'Pull', type: 'strength', detail: 'Same as Phase 3. Pull-up progression is the long-term flex.', exercises: [
+        { name: 'Deadlift', sets: '3×5' },
+        { name: 'Weighted Pull-ups', sets: '4×6', note: 'Long-term progression focus' },
+        { name: 'Barbell Row', sets: '4×8' },
+        { name: 'Bicep Curls', sets: '3×10–12' },
+        { name: 'Rear Delt Fly', sets: '3×15' },
+      ]},
       { day: 'Sat', label: 'Long Z2 · 10–12 km', type: 'run', detail: 'Race-prep distance. Sub-65 10K validation around week 16.' },
       { day: 'Sun', label: 'Rest', type: 'rest', detail: 'Sacred. Weigh in Sunday morning before water/coffee.' },
     ],
@@ -153,6 +236,7 @@ export default function RebuildProtocol(): React.ReactElement {
   const [completed, setCompleted] = useState<CompletedMap>({});
   const [loaded, setLoaded] = useState<boolean>(false);
   const [expandedWeek, setExpandedWeek] = useState<number | null>(null);
+  const [expandedDay, setExpandedDay] = useState<string | null>(null);
 
   // Load from window.storage
   useEffect(() => {
@@ -625,6 +709,25 @@ export default function RebuildProtocol(): React.ReactElement {
                 </div>
                 <div className="rp-today-session rp-syne">{todaySession.label}</div>
                 <div className="rp-today-detail">{todaySession.detail}</div>
+                {todaySession.exercises && (
+                  <div style={{ marginBottom: 18 }}>
+                    {todaySession.exercises.map((ex, i) => (
+                      <div key={i} style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'baseline',
+                        padding: '8px 0',
+                        borderBottom: i < todaySession.exercises!.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none',
+                      }}>
+                        <div>
+                          <span style={{ fontSize: 13, color: '#e2e8f0', fontWeight: 500 }}>{ex.name}</span>
+                          {ex.note && <span style={{ fontSize: 11, color: '#64748b', marginLeft: 8 }}>{ex.note}</span>}
+                        </div>
+                        <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 12, color: '#22d3ee', fontWeight: 600 }}>{ex.sets}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
                 <button
                   className={`rp-done-btn ${todayDone ? 'done' : 'pending'}`}
                   onClick={() => toggleSession(currentWeek, currentDay)}
@@ -716,23 +819,98 @@ export default function RebuildProtocol(): React.ReactElement {
                             {phase.weeklyTemplate.map((sess, idx) => {
                               const k = sessionKey(wk, idx);
                               const done = !!completed[k];
+                              const dayKey = `${wk}-${idx}`;
+                              const isExpanded = expandedDay === dayKey;
                               return (
                                 <div
                                   key={idx}
                                   className={`rp-day-row ${done ? 'done' : ''}`}
-                                  style={{ borderLeftColor: phase.color + '70' }}
+                                  style={{ borderLeftColor: phase.color + '70', flexDirection: 'column', gap: 0 }}
                                 >
-                                  <div
-                                    className={`rp-day-checkbox ${done ? 'checked' : ''}`}
-                                    onClick={() => toggleSession(wk, idx)}
-                                  >
-                                    {done ? '✓' : ''}
+                                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, width: '100%' }}>
+                                    <div
+                                      className={`rp-day-checkbox ${done ? 'checked' : ''}`}
+                                      onClick={(e) => { e.stopPropagation(); toggleSession(wk, idx); }}
+                                    >
+                                      {done ? '✓' : ''}
+                                    </div>
+                                    <div className="rp-day-day">{sess.day}</div>
+                                    <div
+                                      className="rp-day-content"
+                                      style={{ cursor: 'pointer' }}
+                                      onClick={() => setExpandedDay(isExpanded ? null : dayKey)}
+                                    >
+                                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <div className="rp-day-label">{sess.label}</div>
+                                        <div style={{ fontSize: 10, color: '#475569', fontFamily: 'JetBrains Mono, monospace' }}>
+                                          {isExpanded ? '−' : '+'}
+                                        </div>
+                                      </div>
+                                    </div>
                                   </div>
-                                  <div className="rp-day-day">{sess.day}</div>
-                                  <div className="rp-day-content">
-                                    <div className="rp-day-label">{sess.label}</div>
-                                    <div className="rp-day-detail">{sess.detail}</div>
-                                  </div>
+                                  {isExpanded && (
+                                    <div style={{
+                                      marginTop: 12,
+                                      padding: '18px',
+                                      background: `linear-gradient(135deg, ${phase.color}12 0%, ${phase.color}06 100%)`,
+                                      border: `1px solid ${phase.color}30`,
+                                      borderRadius: 12,
+                                    }}>
+                                      <div style={{
+                                        fontSize: 10,
+                                        letterSpacing: '0.18em',
+                                        textTransform: 'uppercase',
+                                        color: phase.color,
+                                        fontFamily: 'JetBrains Mono, monospace',
+                                        marginBottom: 8,
+                                      }}>
+                                        Week {wk} · {phase.name} · {sess.day}
+                                      </div>
+                                      <div style={{
+                                        fontFamily: 'Syne, sans-serif',
+                                        fontSize: 22,
+                                        fontWeight: 700,
+                                        color: '#fff',
+                                        lineHeight: 1.1,
+                                        marginBottom: 12,
+                                      }}>
+                                        {sess.label}
+                                      </div>
+                                      <div style={{
+                                        fontSize: 13,
+                                        color: '#94a3b8',
+                                        lineHeight: 1.6,
+                                        marginBottom: sess.exercises ? 12 : 16,
+                                      }}>
+                                        {sess.detail}
+                                      </div>
+                                      {sess.exercises && (
+                                        <div style={{ marginBottom: 16 }}>
+                                          {sess.exercises.map((ex, ei) => (
+                                            <div key={ei} style={{
+                                              display: 'flex',
+                                              justifyContent: 'space-between',
+                                              alignItems: 'baseline',
+                                              padding: '7px 0',
+                                              borderBottom: ei < sess.exercises!.length - 1 ? `1px solid ${phase.color}18` : 'none',
+                                            }}>
+                                              <div>
+                                                <span style={{ fontSize: 13, color: '#e2e8f0', fontWeight: 500 }}>{ex.name}</span>
+                                                {ex.note && <span style={{ fontSize: 11, color: '#64748b', marginLeft: 8 }}>{ex.note}</span>}
+                                              </div>
+                                              <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 12, color: phase.color, fontWeight: 600 }}>{ex.sets}</span>
+                                            </div>
+                                          ))}
+                                        </div>
+                                      )}
+                                      <button
+                                        className={`rp-done-btn ${done ? 'done' : 'pending'}`}
+                                        onClick={(e) => { e.stopPropagation(); toggleSession(wk, idx); }}
+                                      >
+                                        {done ? '✓ Done' : sess.type === 'rest' ? 'Mark Rest Taken' : 'Mark Done'}
+                                      </button>
+                                    </div>
+                                  )}
                                 </div>
                               );
                             })}

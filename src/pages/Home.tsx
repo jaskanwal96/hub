@@ -4,8 +4,8 @@ const apps = [
   {
     slug: "fitness",
     icon: "🏃",
-    name: "5K Finish Strong",
-    desc: "40-day gym + running plan for Tokyo race.",
+    name: "Rebuild Protocol",
+    desc: "8-month lean + strong + runs plan.",
     color: "#22d3ee",
     border: "rgba(34,211,238,0.22)",
     bg: "rgba(34,211,238,0.06)",
