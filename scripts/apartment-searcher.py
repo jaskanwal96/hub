@@ -15,13 +15,14 @@ from datetime import datetime
 # Set as a GitHub Actions Secret named NTFY_TOPIC
 NTFY_TOPIC = "ur-east-kanagawa-supernova-42"
 
-ROOM_TYPES = ["1LDK", "2K", "2DK"]
+ROOM_TYPES = ["1DK", "1LDK", "2K", "2DK"]
 
 # Bounding box for East Kanagawa
-NE_LAT = 35.58560762751869
-NE_LNG = 139.7360707173103
-SW_LAT = 35.502360969814525
-SW_LNG = 139.56509598586499
+NE_LAT = 35.571391842373224
+NE_LNG = 139.72998528804735
+SW_LAT = 35.48813042291051
+SW_LNG = 139.55901055660203
+MAX_RENT = 110000
 
 # ──────────────────────────────────────────────────────────────────────────────
 
@@ -45,7 +46,7 @@ def now():
 def build_payload():
     room_params = "&".join(f"room={r}" for r in ROOM_TYPES)
     return (
-        f"rent_low=&rent_high=&floorspace_low=&floorspace_high="
+        f"rent_low=&rent_high={MAX_RENT}&floorspace_low=&floorspace_high="
         f"&{room_params}"
         f"&ne_lat={NE_LAT}&ne_lng={NE_LNG}"
         f"&sw_lat={SW_LAT}&sw_lng={SW_LNG}"
